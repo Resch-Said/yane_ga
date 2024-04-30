@@ -19,3 +19,8 @@ class Gene:
 
     def get_value(self):
         return self.value
+
+    def copy(self):
+        gene = Gene()
+        gene.set_value(self.get_value())
+        return gene
