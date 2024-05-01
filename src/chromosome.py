@@ -1,9 +1,17 @@
+from config import Config
 from gene import Gene
+import random
 
 
 class Chromosome:
     def __init__(self):
         self.genes: list[Gene] = []
+        self.fitness = None
+
+    def initialize(self, length):
+        for _ in range(length):
+            self.add_gene(Gene(initialize=True))
+        return self
 
     def add_gene(self, gene: Gene):
         self.genes.append(gene)
@@ -11,17 +19,8 @@ class Chromosome:
     def remove_gene(self, gene: Gene):
         self.genes.remove(gene)
 
-    def remove_gene_at(self, index: int):
-        self.genes.pop(index)
-
-    def get_gene_at(self, index: int):
-        return self.genes[index]
-
     def get_genes(self):
         return self.genes
-
-    def get_genes_between(self, start: int, end: int):
-        return self.genes[start : end + 1]
 
     def get_gene_values(self):
         return [gene.get_value() for gene in self.genes]
@@ -29,42 +28,29 @@ class Chromosome:
     def get_length(self):
         return len(self.genes)
 
-    def copy(self):
+    def copy(self) -> "Chromosome":
         chromo = Chromosome()
         for gene in self.genes:
             chromo.add_gene(gene.copy())
         return chromo
 
-    def mutate(self):
+    def mutate(self, mutation_rate=Config.get_gene_mutation_rate()):
         for gene in self.genes:
-            gene.mutate()
+            gene.mutate(mutation_rate=mutation_rate)
 
     def __str__(self):
         return str([str(gene) for gene in self.genes])
 
+    def set_genes(self, values):
+
+        for value in values:
+            self.add_gene(Gene().set_value(value))
+        return self
+
+    def evaluate(self, fitness_function):
+        self.fitness = fitness_function(self.get_gene_values())
+        return self.fitness
+
 
 if __name__ == "__main__":
-    chromosome = Chromosome()
-    gene = Gene()
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.add_gene(gene.copy())
-    chromosome.mutate()
-    print(chromosome)
-    print(chromosome.get_gene_values())
-    print(chromosome.get_length())
-    print(chromosome.get_gene_at(0))
-    print(chromosome.get_genes_between(0, 5))
-    print(chromosome.get_genes())
-    chromosome.remove_gene_at(0)
-    print(chromosome)
-    chromosome.remove_gene(chromosome.get_gene_at(0))
-    print(chromosome)
-    print(chromosome.get_genes_between(0, 1))
+    pass
