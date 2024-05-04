@@ -6,6 +6,7 @@
     "max_value": 1
   },
     "population": {
+      "size": 100,
       "tournament_size": 0.1
     }
 }

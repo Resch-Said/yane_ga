@@ -29,3 +29,7 @@ class Config:
     @classmethod
     def get_tournament_selection_k(cls):
         return cls.get()["population"]["tournament_size"]
+
+    @classmethod
+    def get_population_size(cls):
+        return cls.get()["population"]["size"]
