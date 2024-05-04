@@ -42,7 +42,7 @@ class Population:
 
     def evaluate(self, fitness_function):
         for chromo in self.chromosomes:
-            chromo.fitness = fitness_function(chromo.get_gene_values())
+            chromo.evaluate(fitness_function)
 
     def copy(self):
         pop = Population()
