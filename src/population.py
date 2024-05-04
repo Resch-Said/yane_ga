@@ -2,13 +2,17 @@ from itertools import zip_longest
 from chromosome import Chromosome
 import random
 
+from config import Config
 from gene import Gene
 from utils.crossover_util import CrossoverUtil
 
 
 class Population:
-    def __init__(self):
+    def __init__(self, length=None, genes_length=None):
         self.chromosomes: list[Chromosome] = []
+
+        if length and genes_length:
+            self.initialize(length, genes_length)
 
     def initialize(self, length, genes_length):
         for _ in range(length):
@@ -25,9 +29,9 @@ class Population:
     def remove_chromosome(self, chromosome: Chromosome):
         self.chromosomes.remove(chromosome)
 
-    def mutate(self):
+    def mutate(self, mutation_rate=Config.get_gene_mutation_rate()):
         for chromo in self.chromosomes:
-            chromo.mutate()
+            chromo.mutate(mutation_rate=mutation_rate)
 
     def crossover(self, chromosome1, chromosome2):
         genes1 = chromosome1.get_genes()

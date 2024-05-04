@@ -4,9 +4,12 @@ import random
 
 
 class Chromosome:
-    def __init__(self):
+    def __init__(self, gene_length=None):
         self.genes: list[Gene] = []
         self.fitness = None
+
+        if gene_length:
+            self.initialize(gene_length)
 
     def initialize(self, length):
         for _ in range(length):
