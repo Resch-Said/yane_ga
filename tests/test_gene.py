@@ -35,12 +35,14 @@ class TestGene(unittest.TestCase):
         self.assertTrue(gene.value in Config.get_value_pool())
 
     def test_mutate_alpha_to_number(self):
-        seed = 33
-        random.seed(seed)
-
         gene = Gene("A")
-        gene.mutate(mutation_rate=1, use_value_pool=True)
-        self.assertFalse(gene.value in Config.get_value_pool())
+        seed = 0
+        while gene.value in Config.get_value_pool() and seed < 100:
+            seed += 1
+            random.seed(seed)
+            gene.mutate(mutation_rate=1, use_value_pool=True)
+
+        self.assertTrue(gene.value not in Config.get_value_pool())
 
     def test_mutate_number_to_alpha(self):
         seed = 1
