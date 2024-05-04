@@ -115,3 +115,23 @@ class TestPopulation(unittest.TestCase):
         self.population.add_chromosome(chromosome)
 
         self.assertEqual(self.population.get_length(), 1)
+
+    def test_tournament_selection(self):
+        random.seed()
+
+        gene_length = 3
+        chromosome1 = Chromosome().initialize(gene_length)
+        chromosome1.fitness = 1
+
+        chromosome2 = Chromosome().initialize(gene_length)
+        chromosome2.fitness = 2
+
+        chromosome3 = Chromosome().initialize(gene_length)
+        chromosome3.fitness = 3
+
+        self.population.add_chromosome(chromosome1)
+        self.population.add_chromosome(chromosome2)
+        self.population.add_chromosome(chromosome3)
+
+        selected = self.population.tournament_selection()
+        self.assertTrue(selected in [chromosome1, chromosome2, chromosome3])

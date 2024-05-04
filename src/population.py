@@ -1,9 +1,9 @@
-from itertools import zip_longest
+import math
+
 from chromosome import Chromosome
 import random
 
 from config import Config
-from gene import Gene
 from utils.crossover_util import CrossoverUtil
 
 
@@ -52,6 +52,15 @@ class Population:
 
     def get_length(self):
         return len(self.chromosomes)
+
+
+    def tournament_selection(self, k=None):
+        if k is None:
+            k = math.ceil(self.get_length() * Config.get_tournament_selection_k())
+        selected = []
+        for _ in range(k):
+            selected.append(random.choice(self.chromosomes))
+        return max(selected, key=lambda chromo: chromo.fitness)
 
 
 if __name__ == "__main__":

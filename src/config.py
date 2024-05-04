@@ -25,3 +25,7 @@ class Config:
     @classmethod
     def get_max_value(cls):
         return cls.get()["gene"]["max_value"]
+
+    @classmethod
+    def get_tournament_selection_k(cls):
+        return cls.get()["population"]["tournament_size"]
